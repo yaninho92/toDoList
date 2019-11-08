@@ -1,0 +1,38 @@
+<div class="container py-5">
+  <h1 class="font-weight-light" *ngIf="currentUser">
+    Bienvenue sur votre profil {{ currentUser.firstname }} {{ currentUser.lastname }}
+    <div class="spinner-border text-primary" *ngIf="photoUploading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </h1>
+  <div class="row" *ngIf="currentUser && currentUser.photo && currentUser.photo !== ''">
+    <div class="col-sm-12 col-md-8 col-lg-4">
+      <img [src]="currentUser.photo" class="w-100">
+    </div>
+  </div>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmitProfileForm()">
+    <div class="input-group mb-3">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="onUploadPhoto($event)">
+        <label class="custom-file-label" for="inputGroupFile01">Choisir une photo</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="firstname">Prénom</label>
+        <input type="text" formControlName="firstname" class="form-control" id="firstname" placeholder="Ex: John">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="lastname">NOM</label>
+        <input type="text" formControlName="lastname" class="form-control" id="lastname" placeholder="Ex: DOE">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Adresse email</label>
+      <input type="email" formControlName="email" id="email" placeholder="example@example.com" class="form-control">
+    </div>
+    <div class="text-center">
+      <button class="btn btn-success" type="submit">Enregistrer</button>
+    </div>
+  </form>
+</div>

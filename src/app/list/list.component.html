@@ -1,0 +1,53 @@
+<div class="container">
+  <h1 class="my-5 display-4">Ma liste des tâches</h1>
+  <div class="text-center">
+    <button class="btn btn-primary" type="button" (click)="onDisplayModal()">Nouvelle tâche</button>
+  </div>
+  <div class="shadow p-2 my-3 rounded d-flex" *ngFor="let task of tasks; let i = index">
+    <div class="d-flex p-3" (click)="onCheckTask(i)">
+      <i *ngIf="!task.done" class="far fa-square my-auto"></i>
+      <i *ngIf="task.done" class="far fa-check-square my-auto"></i>
+    </div>
+    <div>
+      <h5 class="font-weight-normal">{{ task.title }}</h5>
+      <p>{{ task.description }}</p>
+    </div>
+    <div class="ml-auto d-flex">
+      <button class="btn btn-primary my-auto" (click)="onEditTask(i)">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button class="btn btn-danger my-auto" (click)="onDeleteTask(i)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="newTaskModalCenter" tabindex="-1" role="dialog" aria-labelledby="newTaskModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmitTaskForm()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newTaskModalCenterTitle">Edition d'une tâche</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editTaskTitle">Titre</label>
+            <input type="text" class="form-control" id="editTaskTitle" formControlName="title">
+          </div>
+          <div class="form-group">
+            <label for="editTaskDescription">Description</label>
+            <textarea class="form-control w-100" id="editTaskDescription" rows="5" formControlName="description"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
